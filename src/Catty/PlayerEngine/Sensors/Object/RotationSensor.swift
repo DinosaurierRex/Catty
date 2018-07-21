@@ -36,8 +36,8 @@
         return self.convertSceneToDegrees(Util.radians(toDegree: Double(rawValue)))
     }
     
-    func convertToRaw(standardizedValue: Double) -> Double {
-        return Util.degree(toRadians: self.convertDegreesToScene(standardizedValue))
+    func convertToRaw(userInput: Double) -> Double {
+        return Util.degree(toRadians: self.convertDegreesToScene(userInput))
     }
     
     func showInFormulaEditor(for spriteObject: SpriteObject) -> Bool {
