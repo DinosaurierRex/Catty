@@ -20,8 +20,7 @@
  *  along with this program.  If not, see http://www.gnu.org/licenses/.
  */
 
-class LoudnessSensor: DeviceSensor {
-    
+class LoudnessSensor: DeviceSensor, ReadWriteSensor {
     static let tag = "LOUDNESS"
     static let name = kUIFESensorLoudness
     static let defaultRawValue = 0.0
@@ -34,12 +33,18 @@ class LoudnessSensor: DeviceSensor {
     }
 
     func rawValue() -> Double {
-        // TODO implement
         return self.getAudioManager()?.loudness() ?? type(of: self).defaultRawValue
     }
     
     func convertToStandardized(rawValue: Double) -> Double {
-        return rawValue
+        if 2 * rawValue + 100 < 0 {
+            return 0
+        }
+        return 2 * rawValue + 100
+    }
+    
+    func convertToRaw(userInput: Double) -> Double {
+        return (userInput - 100) / 2
     }
     
     func showInFormulaEditor() -> Bool {

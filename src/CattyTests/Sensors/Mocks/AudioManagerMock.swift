@@ -20,26 +20,18 @@
  *  along with this program.  If not, see http://www.gnu.org/licenses/.
  */
 
-protocol LocationManager {
-    var heading: Heading? { get }
-    var location: Location? { get }
+@testable import Pocket_Code
+
+final class AudioManagerMock: AudioManager {
+    var loudnessDecibels: Double = 0
+
+    var loudness: Audio {
+        return AudioMock(loudness: self.loudness as! Double)
+    }
+    
 }
 
-protocol Heading {
-    var magneticHeading: Double { get }
+struct AudioMock: Audio {
+    var loudness: Double
 }
 
-protocol Audio {
-    var loudness: Double { get }
-}
-
-protocol Location {
-    var coordinate: LocationCoordinate2D { get }
-    var altitude: Double { get }
-    var horizontalAccuracy: Double { get }
-}
-
-protocol LocationCoordinate2D {
-    var longitude: Double { get }
-    var latitude: Double { get }
-}
