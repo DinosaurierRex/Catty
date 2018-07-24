@@ -20,18 +20,21 @@
  *  along with this program.  If not, see http://www.gnu.org/licenses/.
  */
 
-@testable import Pocket_Code
-
-final class AudioManagerMock: AudioManager {
-    var loudnessDecibels: Double = 0
-
-    var loudness: Audio {
-        return AudioMock(loudness: self.loudness as! Double)
+final class AudioManagerMock: AudioManagerProtocol {
+    
+    var mockedLoudnessInDecibels: Double?
+    
+    func startLoudnessRecorder() {
     }
     
+    func stopLoudnessRecorder() {
+    }
+    
+    func loudness() -> Double? {
+        return mockedLoudnessInDecibels
+    }
+    
+    func loudnessAvailable() -> Bool {
+        return true
+    }
 }
-
-struct AudioMock: Audio {
-    var loudness: Double
-}
-

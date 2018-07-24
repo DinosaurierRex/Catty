@@ -39,15 +39,15 @@ final class LoudnessSensorTest: XCTestCase {
         self.audioManager = nil
     }
     
-    /*func testDefaultRawValue() {
+    func testDefaultRawValue() {
         let sensor = LoudnessSensor { nil }
         XCTAssertEqual(type(of: sensor).defaultRawValue, sensor.rawValue(), accuracy: 0.0001)
     }
     
     func testRawValue() {
-        self.audioManager.loudnessDecibels = 3
+        self.audioManager.mockedLoudnessInDecibels = 3
         XCTAssertEqual(3, self.sensor.rawValue(), accuracy: 0.0001)
-    }*/
+    }
     
     func testConvertToStandardized() {
         // smaller than 0 - Android does not have negative values

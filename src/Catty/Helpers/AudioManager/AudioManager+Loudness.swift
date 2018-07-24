@@ -20,18 +20,18 @@
  *  along with this program.  If not, see http://www.gnu.org/licenses/.
  */
 
-let NOISE_RECOGNIZER_DEFAULT_UPDATE_INTERVAL = 0.05
-
 extension AudioManager: AudioManagerProtocol {
+    private var NOISE_RECOGNIZER_DEFAULT_UPDATE_INTERVAL: Double { get { return 0.5 } }
+    private var NOISE_RECORDER_CHANNEL: Int { get { return 0 } }
     
     func startLoudnessRecorder() -> Void {
         if self.recorder == nil {
             self.initRecorder()
         }
         
-        self.loudnessTimer = Timer(timeInterval: NOISE_RECOGNIZER_DEFAULT_UPDATE_INTERVAL,
+        self.loudnessTimer = Timer.scheduledTimer(timeInterval: NOISE_RECOGNIZER_DEFAULT_UPDATE_INTERVAL,
                                    target: self,
-                                   selector: #selector(programTimerCallback),
+                                   selector: #selector(self.programTimerCallback),
                                    userInfo: nil,
                                    repeats: true)
         
@@ -48,12 +48,11 @@ extension AudioManager: AudioManagerProtocol {
         }
     }
     
-    func loudness() -> Double {
-        programTimerCallback(timer: self.loudnessTimer)
-        if (self.loudnessInDecibels == nil) {
-            return -160.0 // no sound
+    func loudness() -> Double? {
+        if self.loudnessInDecibels == nil || self.recorder == nil {
+            return nil // no sound
         }
-        return self.loudnessInDecibels as! Double
+        return self.loudnessInDecibels as? Double
     }
     
     func initRecorder() {
@@ -74,13 +73,16 @@ extension AudioManager: AudioManagerProtocol {
     }
     
     func loudnessAvailable() -> Bool {
-        self.initRecorder()
-        return self.recorder.prepareToRecord()
+        if self.recorder == nil {
+            self.initRecorder()
+            return self.recorder.prepareToRecord()
+        }
+        return true
     }
     
-    @objc func programTimerCallback(timer: Timer) {
+    @objc func programTimerCallback() {
         self.recorder.updateMeters()
-        self.loudnessInDecibels = self.recorder.averagePower(forChannel: 0) as NSNumber
+        self.loudnessInDecibels = self.recorder.averagePower(forChannel: NOISE_RECORDER_CHANNEL) as NSNumber
     }
     
 }
