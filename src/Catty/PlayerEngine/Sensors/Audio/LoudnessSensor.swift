@@ -37,14 +37,14 @@ class LoudnessSensor: DeviceSensor, ReadWriteSensor {
     }
     
     func convertToStandardized(rawValue: Double) -> Double {
-        if 2 * rawValue + 100 < 0 {
+        if 3 * rawValue + 100 < 0 {
             return 0
         }
-        return 2 * rawValue + 100
+        return 3 * rawValue + 100
     }
     
     func convertToRaw(userInput: Double) -> Double {
-        return (userInput - 100) / 2
+        return (userInput - 100) / 3
     }
     
     func showInFormulaEditor() -> Bool {

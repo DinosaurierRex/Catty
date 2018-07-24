@@ -47,6 +47,12 @@ final class LoudnessSensorTest: XCTestCase {
     func testRawValue() {
         self.audioManager.mockedLoudnessInDecibels = 3
         XCTAssertEqual(3, self.sensor.rawValue(), accuracy: 0.0001)
+        
+        self.audioManager.mockedLoudnessInDecibels = -50
+        XCTAssertEqual(-50, self.sensor.rawValue(), accuracy: 0.0001)
+        
+        self.audioManager.mockedLoudnessInDecibels = 10.786
+        XCTAssertEqual(10.786, self.sensor.rawValue(), accuracy: 0.0001)
     }
     
     func testConvertToStandardized() {

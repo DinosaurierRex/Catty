@@ -21,15 +21,15 @@
  */
 
 extension AudioManager: AudioManagerProtocol {
-    private var NOISE_RECOGNIZER_DEFAULT_UPDATE_INTERVAL: Double { get { return 0.5 } }
-    private var NOISE_RECORDER_CHANNEL: Int { get { return 0 } }
+    private var noiseRecogniserTimeIntervalInSeconds: Double { get { return 0.05 } }
+    private var noiseRecorderChannel: Int { get { return 0 } }
     
     func startLoudnessRecorder() -> Void {
         if self.recorder == nil {
             self.initRecorder()
         }
         
-        self.loudnessTimer = Timer.scheduledTimer(timeInterval: NOISE_RECOGNIZER_DEFAULT_UPDATE_INTERVAL,
+        self.loudnessTimer = Timer.scheduledTimer(timeInterval: noiseRecogniserTimeIntervalInSeconds,
                                    target: self,
                                    selector: #selector(self.programTimerCallback),
                                    userInfo: nil,
@@ -82,7 +82,7 @@ extension AudioManager: AudioManagerProtocol {
     
     @objc func programTimerCallback() {
         self.recorder.updateMeters()
-        self.loudnessInDecibels = self.recorder.averagePower(forChannel: NOISE_RECORDER_CHANNEL) as NSNumber
+        self.loudnessInDecibels = self.recorder.averagePower(forChannel: noiseRecorderChannel) as NSNumber
     }
     
 }
