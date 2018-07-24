@@ -60,23 +60,23 @@ final class LoudnessSensorTest: XCTestCase {
         XCTAssertEqual(0, self.sensor.convertToStandardized(rawValue: -60), accuracy: 0.0001)
         
         // background noise
-        XCTAssertEqual(0, self.sensor.convertToStandardized(rawValue: -50), accuracy: 0.0001)
+        XCTAssertEqual(1, self.sensor.convertToStandardized(rawValue: -33), accuracy: 0.0001)
         
         // whisper
-        XCTAssertEqual(20, self.sensor.convertToStandardized(rawValue: -40), accuracy: 0.0001)
+        XCTAssertEqual(19, self.sensor.convertToStandardized(rawValue: -27), accuracy: 0.0001)
         
         // normal voice
-        XCTAssertEqual(50, self.sensor.convertToStandardized(rawValue: -25), accuracy: 0.0001)
+        XCTAssertEqual(70, self.sensor.convertToStandardized(rawValue: -10), accuracy: 0.0001)
         
         // shouting
-        XCTAssertEqual(90, self.sensor.convertToStandardized(rawValue: -5), accuracy: 0.0001)
+        XCTAssertEqual(91, self.sensor.convertToStandardized(rawValue: -3), accuracy: 0.0001)
     }
     
     func testConvertToRaw() {
-        XCTAssertEqual(0, self.sensor.convertToRaw(userInput: 100), accuracy: 0.0001)
-        XCTAssertEqual(-10, self.sensor.convertToRaw(userInput: 80), accuracy: 0.0001)
-        XCTAssertEqual(-35, self.sensor.convertToRaw(userInput: 30), accuracy: 0.0001)
-        XCTAssertEqual(-45, self.sensor.convertToRaw(userInput: 10), accuracy: 0.0001)
+        XCTAssertEqual(-22.6666, self.sensor.convertToRaw(userInput: 32), accuracy: 0.0001)
+        XCTAssertEqual(-15, self.sensor.convertToRaw(userInput: 55), accuracy: 0.0001)
+        XCTAssertEqual(-33.2, self.sensor.convertToRaw(userInput: 0.4), accuracy: 0.0001)
+        XCTAssertEqual(-24.75, self.sensor.convertToRaw(userInput: 25.75), accuracy: 0.0001)
     }
     
     func testTag() {
