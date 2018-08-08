@@ -92,6 +92,8 @@ NS_ENUM(NSInteger, ButtonIndex) {
 @property (weak, nonatomic) IBOutlet UIButton *deleteVar;
 
 @property (nonatomic) BOOL isProgramVariable;
+@property (nonatomic) BOOL isScreenTouched;
+@property (nonatomic) BOOL isComputePressed;
 @property (nonatomic, strong) BDKNotifyHUD *notficicationHud;
 @end
 
@@ -231,6 +233,8 @@ NS_ENUM(NSInteger, ButtonIndex) {
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    self.isScreenTouched = NO;
+    self.isComputePressed = NO;
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -428,6 +432,12 @@ NS_ENUM(NSInteger, ButtonIndex) {
     self.deleteButton.shapeStrokeColor = enabled ? [UIColor navTintColor] : [UIColor grayColor];
 }
 
+-(void) touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    if (self.isComputePressed == YES) {
+        self.isScreenTouched = YES;
+    }
+}
+
 - (IBAction)compute:(id)sender
 {
     if (self.internFormula != nil) {
@@ -436,6 +446,8 @@ NS_ENUM(NSInteger, ButtonIndex) {
         Formula *formula = [[Formula alloc] initWithFormulaElement:[internFormulaParser parseFormulaForSpriteObject:brick.script.object]];
         NSString *computedString;
 
+        self.isComputePressed = YES;
+        while(self.isScreenTouched == NO) {
         switch ([internFormulaParser getErrorTokenIndex]) {
             case FORMULA_PARSER_OK:
                 
@@ -462,6 +474,7 @@ NS_ENUM(NSInteger, ButtonIndex) {
             default:
                 [self showSyntaxErrorView];
                 break;
+        }
         }
     }
 }
