@@ -20,20 +20,25 @@
  *  along with this program.  If not, see http://www.gnu.org/licenses/.
  */
 
-#import <Foundation/Foundation.h>
-#import <AVFoundation/AVFoundation.h>
-
-@interface FaceDetection : NSObject <AVCaptureVideoDataOutputSampleBufferDelegate>
-
-
-@property (nonatomic, assign) BOOL isFaceDetected;
-@property (nonatomic, assign) CGRect faceSize;
-@property (nonatomic, assign) NSInteger facePositionX;
-@property (nonatomic, assign) NSInteger facePositionY;
-@property (nonatomic, strong) AVCaptureSession *session;
-
--(void)startFaceDetection;
--(void)pauseFaceDetection;
--(void)stopFaceDetection;
-
-@end
+class LengthFunction: SingleParameterFunction {
+    
+    static var tag = "LENGTH"
+    static var name = "length"
+    static var defaultValue = 0.0
+    static var requiredResource = ResourceType.noResources
+    static var isIdempotent = true
+    static let position = 210
+    
+    static func firstParameter() -> FunctionParameter {
+        return .string(defaultValue: "hello world")
+    }
+    
+    func value(parameter: AnyObject?) -> Double {
+        let text = type(of: self).interpretParameter(parameter: parameter)
+        return Double(text.count)
+    }
+    
+    static func formulaEditorSection() -> FormulaEditorSection {
+        return .math(position: position)
+    }
+}

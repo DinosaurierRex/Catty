@@ -24,13 +24,27 @@ import CoreMotion
 
 protocol SensorManagerProtocol {
     
-    var defaultValueForUndefinedSensor : Double { get set }
+    static var defaultValueForUndefinedSensor: Double { get set }
+    
+    func exists(tag: String) -> Bool
     
     func sensor(tag: String) -> CBSensor?
     
-    func value(sensorTag: String, spriteObject: SpriteObject?) -> AnyObject
+    func requiredResource(tag: String) -> ResourceType
     
-    func setupSensors(for program: Program, and scene:CBScene)
+    func name(sensor: CBSensor) -> String
     
-    func stopSensors()
+    func name(tag: String) -> String?
+    
+    func value(tag: String, spriteObject: SpriteObject?) -> AnyObject
+    
+    func deviceSensors(for spriteObject: SpriteObject) -> [CBSensor]
+    
+    func objectSensors(for spriteObject: SpriteObject) -> [CBSensor]
+    
+    func phiroSensors() -> [PhiroSensor]
+    
+    func setup(for program: Program, and scene:CBScene)
+    
+    func stop()
 }

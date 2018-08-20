@@ -26,20 +26,27 @@
     static let name = kUIFESensorFingerY
     static let defaultRawValue = 0.0
     static let requiredResource = ResourceType.touchHandler
+    static let position = 140
 
-    func rawValue() -> Double {
-        return 0 // TODO
-    }
-
-    func convertToStandardized(rawValue: Double) -> Double {
-        return rawValue
+    let getTouchManager: () -> TouchManagerProtocol?
+    
+    init(touchManagerGetter: @escaping () -> TouchManagerProtocol?) {
+        self.getTouchManager = touchManagerGetter
     }
     
-    func showInFormulaEditor() -> Bool {
-        return true
+    func rawValue() -> Double {
+        guard let lastPosition = getTouchManager()?.lastPositionInScene() else { return type(of: self).defaultRawValue }
+        return Double(lastPosition.y)
+    }
+    
+    // We have to move (0, 0) from top left to te center
+    func convertToStandardized(rawValue: Double, for spriteObject: SpriteObject) -> Double {
+        guard let _ = getTouchManager()?.lastPositionInScene() else { return type(of: self).defaultRawValue }
+        guard let scene = spriteObject.spriteNode.scene else { return type(of: self).defaultRawValue }
+        return Double(scene.size.height)/2.0 - rawValue
     }
     
     static func formulaEditorSection(for spriteObject: SpriteObject) -> FormulaEditorSection {
-        return .hidden
+        return .device(position: position)
     }
 }

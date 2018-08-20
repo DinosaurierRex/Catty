@@ -32,17 +32,43 @@ final class CBSensorManagerTest: XCTestCase {
     }
     
     func testDefaultValueForUndefinedSensor() {
-        manager.defaultValueForUndefinedSensor = 12.3
+        let defaultValue = 12.3
+        type(of: manager).defaultValueForUndefinedSensor = defaultValue
         
         XCTAssertNil(manager.sensor(tag: "noSensorForThisTag"))
-        XCTAssertEqual(manager.defaultValueForUndefinedSensor, manager.value(sensorTag: "noSensorForThisTag", spriteObject: nil) as! Double)
+        XCTAssertEqual(defaultValue, manager.value(tag: "noSensorForThisTag", spriteObject: nil) as! Double)
     }
     
-    func testValueForTag() {
-//        XCTAssertEqual(sensor.transformToPocketCode(rawValue: sensor.rawValue()), manager.value(sensorTag: sensor.tag))
+    func testExists() {
+        // TODO
+    }
+    
+    func testSensor() {
+        // TODO
+    }
+    
+    func testRequiredResource() {
+        // TODO
+    }
+    
+    func testName() {
+        // TODO test name for sensor and tag
     }
     
     func testValue() {
-//        XCTAssertEqual(sensor.transformToPocketCode(rawValue: sensor.rawValue()), manager.value(sensor: sensor))
+        // TODO
+    }
+    
+    func testDeviceSensors() {
+        // TODO
+    }
+    
+    func testObjectSensors() {
+        // TODO
+        // add tests for Background/Look
+    }
+    
+    func testPhiroSensors() {
+        // TODO
     }
 }

@@ -20,23 +20,39 @@
  *  along with this program.  If not, see http://www.gnu.org/licenses/.
  */
 
-#import <Foundation/Foundation.h>
-#import "Pocket_Code-Swift.h"
-
-@interface TouchHandler : NSObject <UIGestureRecognizerDelegate>
-
-+ (instancetype)shared;
-
-@property (nonatomic) CBScene* scene;
-
-@property (nonatomic) BOOL screenIsTouched;
-@property (nonatomic) CGPoint lastFingerPosition;   //When finger is tapped and dragged around on the screen, this is updated.
-
--(void)startTrackingTouchesForScene:(CBScene*)scene;
--(void)stopTrackingTouches;
--(void)resumeTrackingTouches;
--(CGPoint)getPositionInSceneForTouchNumber:(NSUInteger)touchNumber;
--(CGPoint)getLastPositionInScene;
--(NSUInteger)numberOfTouches;
-
-@end
+final class TouchManagerMock: TouchManagerProtocol {
+    
+    var touchRecognizer: UILongPressGestureRecognizer?
+    var scene: CBScene?
+    var isScreenTouched: Bool?
+    var touches: [CGPoint] = []
+    var lastTouch: CGPoint?
+    
+    func startTrackingTouches(for scene: CBScene) {
+    }
+    
+    func stopTrackingTouches() {
+    }
+    
+    func reset() {
+    }
+    
+    func screenTouched() -> Bool {
+        return isScreenTouched!
+    }
+    
+    func numberOfTouches() -> Int {
+        return touches.count
+    }
+    
+    func lastPositionInScene() -> CGPoint? {
+        return lastTouch
+    }
+    
+    func getPositionInScene(for touchNumber: Int) -> CGPoint? {
+        if touches.count < touchNumber {
+            return nil
+        }
+        return touches[touchNumber - 1]
+    }
+}

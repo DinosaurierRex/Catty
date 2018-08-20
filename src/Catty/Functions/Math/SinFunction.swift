@@ -20,22 +20,25 @@
  *  along with this program.  If not, see http://www.gnu.org/licenses/.
  */
 
-import UIKit
-
-class FormulaEditorSensorButton: UIButton {
+class SinFunction: SingleParameterFunction {
     
-    var sensor: CBSensor
+    static var tag = "SIN"
+    static var name = "sin"
+    static var defaultValue = 0.0
+    static var requiredResource = ResourceType.noResources
+    static var isIdempotent = true
+    static let position = 10
     
-    public init(sensor: CBSensor) {
-        self.sensor = sensor
-        super.init(frame: .zero)
-        self.titleLabel?.font = .systemFont(ofSize: 18.0)
-        self.setTitle(type(of: sensor).name, for: .normal)
-        self.translatesAutoresizingMaskIntoConstraints = false
+    static func firstParameter() -> FunctionParameter {
+        return .number(defaultValue: 0)
     }
     
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+    func value(parameter: AnyObject?) -> Double {
+        guard let degree = parameter as? Double else { return type(of: self).defaultValue }
+        return sin(Util.degree(toRadians: degree))
     }
     
+    static func formulaEditorSection() -> FormulaEditorSection {
+        return .math(position: position)
+    }
 }

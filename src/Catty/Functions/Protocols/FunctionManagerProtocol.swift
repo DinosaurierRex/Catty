@@ -20,13 +20,23 @@
  *  along with this program.  If not, see http://www.gnu.org/licenses/.
  */
 
-extension Functions {
-
-    static var cachedNonIdempotentFunctions: [Function] = {
-        return Functions.nonIdempotentFunctions().compactMap { Function(rawValue: Int32($0.intValue)) }
-    }()
-
-    @objc static func isIdempotentFunction(_ function: Function) -> Bool {
-        return cachedNonIdempotentFunctions.contains(function) == false
-    }
+protocol FunctionManagerProtocol {
+    
+    static var defaultValueForUndefinedFunction: Double { get set }
+    
+    func exists(tag: String) -> Bool
+    
+    func function(tag: String) -> CBFunction?
+    
+    func requiredResource(tag: String) -> ResourceType
+    
+    func name(tag: String) -> String?
+    
+    func value(tag: String, firstParameter: AnyObject?, secondParameter: AnyObject?) -> AnyObject
+    
+    func setup(for program: Program, and scene:CBScene)
+    
+    func stop()
+    
+    func functions() -> [CBFunction]
 }

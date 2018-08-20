@@ -63,7 +63,7 @@ extension InternFormula {
             return buildNumber(numberValue: "9")
             
         // FUNCTIONS
-        case Int(SIN.rawValue):
+        /*case Int(SIN.rawValue):
             return buildSingleParameterFunction(function: SIN, firstParameterType: TOKEN_TYPE_NUMBER, firstParameterValue: "0")
         case Int(COS.rawValue):
             return buildSingleParameterFunction(function: COS, firstParameterType: TOKEN_TYPE_NUMBER, firstParameterValue: "0")
@@ -129,13 +129,13 @@ extension InternFormula {
             return buildSingleParameterFunction(function: MULTI_FINGER_X, firstParameterType: TOKEN_TYPE_NUMBER, firstParameterValue: "1")
         case Int(MULTI_FINGER_Y.rawValue):
             return buildSingleParameterFunction(function: MULTI_FINGER_Y, firstParameterType: TOKEN_TYPE_NUMBER, firstParameterValue: "1")
+        */
             
         // PERIOD
         case Int(DECIMAL_MARK.rawValue):
             return buildPeriod()
             
         // OPERATOR
-            
         case Int(PLUS.rawValue):
             return buildOperator(mathOperator: PLUS)
         case Int(MINUS.rawValue):
@@ -174,14 +174,22 @@ extension InternFormula {
         }
     }
     
-    func handleKeyInput(withSensor sensor: CBSensor) {
-        let keyInputInternTokenList = NSMutableArray(array: self.createInternTokenListBySensor(sensor: sensor))
+    func handleKeyInput(for sensor: CBSensor) {
+        let keyInputInternTokenList = NSMutableArray(array: self.createInternTokenListForSensor(sensor: sensor))
         self.handleKeyInput(withInternTokenList: keyInputInternTokenList, andResourceId: Int32(TOKEN_TYPE_SENSOR.rawValue))
     }
     
-    private func createInternTokenListBySensor(sensor: CBSensor) -> [InternToken] {
-        // TODO arduino: buildSingleParameterFunction
+    func handleKeyInput(for function: CBFunction) {
+        let keyInputInternTokenList = NSMutableArray(array: self.createInternTokenListForFunction(function: function))
+        self.handleKeyInput(withInternTokenList: keyInputInternTokenList, andResourceId: Int32(TOKEN_TYPE_FUNCTION_NAME.rawValue))
+    }
+    
+    private func createInternTokenListForSensor(sensor: CBSensor) -> [InternToken] {
         return buildSensor(sensor: sensor)
+    }
+    
+    private func createInternTokenListForFunction(function: CBFunction) -> [InternToken] {
+        return buildFunction(function: function)
     }
     
     private func buildUserVariable(name: String) -> [InternToken] {
@@ -198,28 +206,6 @@ extension InternFormula {
     
     private func buildNumber(numberValue: String) -> [InternToken] {
         return [InternToken.init(type: TOKEN_TYPE_NUMBER, andValue: numberValue)]
-    }
-    
-    private func buildSingleParameterFunction(function: Function, firstParameterType:InternTokenType, firstParameterValue: String) -> [InternToken] {
-        return [InternToken.init(type: TOKEN_TYPE_FUNCTION_NAME, andValue: Functions.getName(function)),
-                InternToken.init(type: TOKEN_TYPE_FUNCTION_PARAMETERS_BRACKET_OPEN),
-                InternToken.init(type: firstParameterType, andValue: firstParameterValue),
-                InternToken.init(type: TOKEN_TYPE_FUNCTION_PARAMETERS_BRACKET_CLOSE)
-        ]
-    }
-    
-    private func buildFunctionWithoutParametersAndBrackets(function: Function) -> [InternToken] {
-        return [InternToken.init(type: TOKEN_TYPE_FUNCTION_NAME, andValue: Functions.getName(function))]
-    }
-    
-    private func buildDoubleParameterFunction(function: Function, firstParameterType:InternTokenType, firstParameterValue: String, secondParameterType:InternTokenType, secondParameterValue: String) -> [InternToken] {
-        return [InternToken.init(type: TOKEN_TYPE_FUNCTION_NAME, andValue: Functions.getName(function)),
-                InternToken.init(type: TOKEN_TYPE_FUNCTION_PARAMETERS_BRACKET_OPEN),
-                InternToken.init(type: firstParameterType, andValue: firstParameterValue),
-                InternToken.init(type: TOKEN_TYPE_FUNCTION_PARAMETER_DELIMITER),
-                InternToken.init(type: secondParameterType, andValue: secondParameterValue),
-                InternToken.init(type: TOKEN_TYPE_FUNCTION_PARAMETERS_BRACKET_CLOSE)
-        ]
     }
     
     private func buildPeriod() -> [InternToken] {
@@ -239,17 +225,43 @@ extension InternFormula {
     }
     
     private func buildSensor(sensor: CBSensor) -> [InternToken] {
-        let sensorTag = CBSensorManager.shared.tag(sensor: sensor)
-        return [InternToken.init(type: TOKEN_TYPE_SENSOR, andValue: sensorTag)]
+        return [InternToken.init(type: TOKEN_TYPE_SENSOR, andValue: type(of: sensor).tag)]
     }
     
-    private func buildSingleParameterSensor(sensor: Any, firstParameterType: InternTokenType, firstParameterValue: String) -> [InternToken] {
-        let sensorTag: String
-        sensorTag = CBSensorManager.shared.tag(sensor: sensor as! CBSensor)
-        return [InternToken.init(type: TOKEN_TYPE_FUNCTION_NAME, andValue: sensorTag),
-                InternToken.init(type: TOKEN_TYPE_FUNCTION_PARAMETERS_BRACKET_OPEN),
-                InternToken.init(type: firstParameterType, andValue: firstParameterValue),
-                InternToken.init(type: TOKEN_TYPE_FUNCTION_PARAMETERS_BRACKET_CLOSE)]
+    private func buildFunction(function: CBFunction) -> [InternToken] {
+        var tokenList = [InternToken]()
+        let parameters = function.parameters()
+        var count = 0
         
+        tokenList.append(InternToken.init(type: TOKEN_TYPE_FUNCTION_NAME, andValue: type(of: function).tag))
+        if parameters.count == 0 {
+            return tokenList    // no parameter
+        }
+        
+        tokenList.append(InternToken.init(type: TOKEN_TYPE_FUNCTION_PARAMETERS_BRACKET_OPEN))
+        for parameter in parameters {
+            tokenList.append(functionParameter(parameter: parameter))
+            count += 1
+            
+            if count < parameters.count && parameters.count > 1 {
+                tokenList.append(InternToken.init(type: TOKEN_TYPE_FUNCTION_PARAMETER_DELIMITER))
+            }
+        }
+        
+        tokenList.append(InternToken.init(type: TOKEN_TYPE_FUNCTION_PARAMETERS_BRACKET_CLOSE))
+        return tokenList
+    }
+    
+    private func functionParameter(parameter: FunctionParameter) -> InternToken {
+        let defaultValueString = parameter.defaultValueString()
+        
+        switch parameter {
+        case .number(_):
+            return InternToken.init(type: TOKEN_TYPE_NUMBER, andValue: defaultValueString)
+        case .string(_):
+            return InternToken.init(type: TOKEN_TYPE_STRING, andValue: defaultValueString)
+        case .list(_):
+            return InternToken.init(type: TOKEN_TYPE_USER_LIST, andValue: defaultValueString)
+        }
     }
 }

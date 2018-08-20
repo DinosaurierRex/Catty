@@ -239,10 +239,6 @@ let kLocalizedPhiro = NSLocalizedString("Phiro", comment: "")
 let kLocalizedArduino = NSLocalizedString("Arduino", comment: "")
 let kLocalizedPhiroBricks = NSLocalizedString("Use Phiro bricks", comment: "")
 let kLocalizedArduinoBricks = NSLocalizedString("Use Arduino bricks", comment: "")
-let kLocalizedFaceDetection = NSLocalizedString("Use face detection", comment: "")
-let kLocalizedFaceDetectionCamera = NSLocalizedString("Face detection camera", comment: "")
-let kLocalizedFaceDetectionDefaultCamera = NSLocalizedString("default camera is back camera", comment: "")
-let kLocalizedBackCamera = NSLocalizedString("Back camera", comment: "")
 let kLocalizedFrontCamera = NSLocalizedString("Front camera", comment: "")
 let kLocalizedDisconnectAllDevices = NSLocalizedString("Disconnect all devices", comment: "")
 let kLocalizedRemoveKnownDevices = NSLocalizedString("Remove known devices", comment: "")
@@ -662,6 +658,8 @@ let kUIFESensorFaceDetected = NSLocalizedString("face_detected", comment: "")
 let kUIFESensorFaceSize = NSLocalizedString("facesize", comment: "")
 let kUIFESensorFaceX = NSLocalizedString("faceposition_x", comment: "")
 let kUIFESensorFaceY = NSLocalizedString("faceposition_y", comment: "")
+
+let kUIFEUnknownElementType = NSLocalizedString("Unknown Element", comment: "")
 
 //************************************************************************************************************
 //************************************       BrickCategoryTitles        ********************************************

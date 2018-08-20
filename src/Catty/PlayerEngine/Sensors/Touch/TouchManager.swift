@@ -26,6 +26,7 @@ class TouchManager: NSObject, TouchManagerProtocol, UIGestureRecognizerDelegate 
     private var scene: CBScene?
     private var isScreenTouched: Bool
     private var touches: [CGPoint]
+    private var lastTouch: CGPoint? // When finger is tapped and dragged around on the screen, this is updated.
     
     override init() {
         isScreenTouched = false
@@ -34,6 +35,7 @@ class TouchManager: NSObject, TouchManagerProtocol, UIGestureRecognizerDelegate 
     
     func startTrackingTouches(for scene: CBScene) {
         self.scene = scene
+        
         let touchRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(handleTouch(gestureRecognizer:)))
         touchRecognizer.minimumPressDuration = 0
         touchRecognizer.cancelsTouchesInView = false
@@ -47,6 +49,7 @@ class TouchManager: NSObject, TouchManagerProtocol, UIGestureRecognizerDelegate 
     
     func stopTrackingTouches() {
         scene = nil
+        reset()
         
         guard let touchRecognizer = self.touchRecognizer else { return }
         touchRecognizer.isEnabled = false
@@ -57,6 +60,7 @@ class TouchManager: NSObject, TouchManagerProtocol, UIGestureRecognizerDelegate 
     func reset() {
         touches.removeAll()
         isScreenTouched = false
+        lastTouch = nil
     }
     
     func screenTouched() -> Bool {
@@ -68,7 +72,7 @@ class TouchManager: NSObject, TouchManagerProtocol, UIGestureRecognizerDelegate 
     }
     
     func lastPositionInScene() -> CGPoint? {
-        return touches.last
+        return lastTouch
     }
     
     func getPositionInScene(for touchNumber: Int) -> CGPoint? {
@@ -87,10 +91,11 @@ class TouchManager: NSObject, TouchManagerProtocol, UIGestureRecognizerDelegate 
         guard let scene = self.scene else { return }
         
         let position = gestureRecognizer.location(in: scene.view)
-        touches.append(position)
+        lastTouch = position
         
         if gestureRecognizer.state == UIGestureRecognizerState.began {
             isScreenTouched = true
+            touches.append(position)
         }
         if gestureRecognizer.state == UIGestureRecognizerState.ended {
             isScreenTouched = false
