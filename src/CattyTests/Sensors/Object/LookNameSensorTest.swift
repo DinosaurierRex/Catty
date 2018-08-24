@@ -79,9 +79,9 @@ final class LookNameSensorTest: XCTestCase {
   
     func testFormulaEditorSection() {
         spriteObject.background = true
-        //XCTAssertEqual(.hidden, sensor.formulaEditorSection(spriteObject))
+        XCTAssertEqual(.hidden, sensor.formulaEditorSection(spriteObject))
         
         spriteObject.background = false
-        //XCTAssertEqual(.object(position: sensor.position), sensor.formulaEditorSection(spriteObject))
+        XCTAssertEqual(.object(position: sensor.position), sensor.formulaEditorSection(spriteObject))
     }
 }
