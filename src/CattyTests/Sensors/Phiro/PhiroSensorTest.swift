@@ -58,49 +58,49 @@ final class PhiroSensorTest: XCTestCase {
     
     func testFormulaEditorSectionFrontLeft() {
         UserDefaults.standard.set(true, forKey: kUsePhiroBricks)
-        XCTAssertEqual(.device(position: type(of: phiroFrontLeft).position), type(of: phiroFrontLeft).formulaEditorSection(for: SpriteObject()))
+        XCTAssertEqual(.device(position: type(of: phiroFrontLeft).position), phiroFrontLeft.formulaEditorSection(for: SpriteObject()))
         
         UserDefaults.standard.set(false, forKey: kUsePhiroBricks)
-        XCTAssertEqual(.hidden, type(of: phiroFrontLeft).formulaEditorSection(for: SpriteObject()))
+        XCTAssertEqual(.hidden, phiroFrontLeft.formulaEditorSection(for: SpriteObject()))
     }
     
     func testFormulaEditorSectionFrontLRight() {
         UserDefaults.standard.set(true, forKey: kUsePhiroBricks)
-        XCTAssertEqual(.device(position: type(of: phiroFrontRight).position), type(of: phiroFrontRight).formulaEditorSection(for: SpriteObject()))
+        XCTAssertEqual(.device(position: type(of: phiroFrontRight).position), phiroFrontRight.formulaEditorSection(for: SpriteObject()))
         
         UserDefaults.standard.set(false, forKey: kUsePhiroBricks)
-        XCTAssertEqual(.hidden, type(of: phiroFrontRight).formulaEditorSection(for: SpriteObject()))
+        XCTAssertEqual(.hidden, phiroFrontRight.formulaEditorSection(for: SpriteObject()))
     }
     
     func testFormulaEditorSectionSideLeft() {
         UserDefaults.standard.set(true, forKey: kUsePhiroBricks)
-        XCTAssertEqual(.device(position: type(of: phiroSideLeft).position), type(of: phiroSideLeft).formulaEditorSection(for: SpriteObject()))
+        XCTAssertEqual(.device(position: type(of: phiroSideLeft).position), phiroSideLeft.formulaEditorSection(for: SpriteObject()))
         
         UserDefaults.standard.set(false, forKey: kUsePhiroBricks)
-        XCTAssertEqual(.hidden, type(of: phiroSideLeft).formulaEditorSection(for: SpriteObject()))
+        XCTAssertEqual(.hidden, phiroSideLeft.formulaEditorSection(for: SpriteObject()))
     }
     
     func testFormulaEditorSectionSideRight() {
         UserDefaults.standard.set(true, forKey: kUsePhiroBricks)
-        XCTAssertEqual(.device(position: type(of: phiroSideRight).position), type(of: phiroSideRight).formulaEditorSection(for: SpriteObject()))
+        XCTAssertEqual(.device(position: type(of: phiroSideRight).position), phiroSideRight.formulaEditorSection(for: SpriteObject()))
         
         UserDefaults.standard.set(false, forKey: kUsePhiroBricks)
-        XCTAssertEqual(.hidden, type(of: phiroSideRight).formulaEditorSection(for: SpriteObject()))
+        XCTAssertEqual(.hidden, phiroSideRight.formulaEditorSection(for: SpriteObject()))
     }
     
     func testFormulaEditorSectionBottomLeft() {
         UserDefaults.standard.set(true, forKey: kUsePhiroBricks)
-        XCTAssertEqual(.device(position: type(of: phiroBottomLeft).position), type(of: phiroBottomLeft).formulaEditorSection(for: SpriteObject()))
+        XCTAssertEqual(.device(position: type(of: phiroBottomLeft).position), phiroBottomLeft.formulaEditorSection(for: SpriteObject()))
         
         UserDefaults.standard.set(false, forKey: kUsePhiroBricks)
-        XCTAssertEqual(.hidden, type(of: phiroBottomLeft).formulaEditorSection(for: SpriteObject()))
+        XCTAssertEqual(.hidden, phiroBottomLeft.formulaEditorSection(for: SpriteObject()))
     }
     
     func testFormulaEditorSectionBottomRight() {
         UserDefaults.standard.set(true, forKey: kUsePhiroBricks)
-        XCTAssertEqual(.device(position: type(of: phiroBottomRight).position), type(of: phiroBottomRight).formulaEditorSection(for: SpriteObject()))
+        XCTAssertEqual(.device(position: type(of: phiroBottomRight).position), phiroBottomRight.formulaEditorSection(for: SpriteObject()))
         
         UserDefaults.standard.set(false, forKey: kUsePhiroBricks)
-        XCTAssertEqual(.hidden, type(of: phiroBottomRight).formulaEditorSection(for: SpriteObject()))
+        XCTAssertEqual(.hidden, phiroBottomRight.formulaEditorSection(for: SpriteObject()))
     }
 }
