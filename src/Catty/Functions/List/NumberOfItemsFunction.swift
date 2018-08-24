@@ -29,7 +29,7 @@ class NumberOfItemsFunction: SingleParameterDoubleFunction {
     static var isIdempotent = false
     static let position = 240
     
-    static func firstParameter() -> FunctionParameter {
+    func firstParameter() -> FunctionParameter {
         return .list(defaultValue: "list name")
     }
     
@@ -42,7 +42,7 @@ class NumberOfItemsFunction: SingleParameterDoubleFunction {
         return Double(elements.count)
     }
     
-    static func formulaEditorSection() -> FormulaEditorSection {
-        return .math(position: position)
+    func formulaEditorSection() -> FormulaEditorSection {
+        return .math(position: type(of: self).position)
     }
 }

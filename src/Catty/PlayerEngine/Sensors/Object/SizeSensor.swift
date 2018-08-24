@@ -30,32 +30,32 @@ class SizeSensor: ObjectDoubleSensor {
     static let requiredResource = ResourceType.noResources
     static let position = 80
 
-    static func rawValue(for spriteObject: SpriteObject) -> Double {
+    func rawValue(for spriteObject: SpriteObject) -> Double {
         guard let spriteNode = spriteObject.spriteNode else {
             return self.defaultRawValue
         }
         return Double(spriteNode.xScale)
     }
     
-    static func setRawValue(userInput: Double, for spriteObject: SpriteObject) {
+    func setRawValue(userInput: Double, for spriteObject: SpriteObject) {
         let rawValue = self.convertToRaw(userInput: userInput, for: spriteObject)
         spriteObject.spriteNode.xScale = CGFloat(rawValue)
         spriteObject.spriteNode.yScale = CGFloat(rawValue)
     }
 
     // the sprite on Android is about 2.4 times smaller
-    static func convertToStandardized(rawValue: Double, for spriteObject: SpriteObject) -> Double {
+    func convertToStandardized(rawValue: Double, for spriteObject: SpriteObject) -> Double {
         return rawValue * (100 * androidToIOSScale)
     }
     
-    static func convertToRaw(userInput: Double, for spriteObject: SpriteObject) -> Double {
+    func convertToRaw(userInput: Double, for spriteObject: SpriteObject) -> Double {
         if userInput <= 0 {
             return 0.0     //Android doesn't have negative values for size
         }
         return userInput / (100 * androidToIOSScale)
     }
     
-    static func formulaEditorSection(for spriteObject: SpriteObject) -> FormulaEditorSection {
-        return .object(position: position)
+    func formulaEditorSection(for spriteObject: SpriteObject) -> FormulaEditorSection {
+        return .object(position: type(of: self).position)
     }
 }

@@ -29,7 +29,7 @@ class RoundFunction: SingleParameterDoubleFunction {
     static var isIdempotent = true
     static let position = 100
     
-    static func firstParameter() -> FunctionParameter {
+    func firstParameter() -> FunctionParameter {
         return .number(defaultValue: 0)
     }
     
@@ -38,7 +38,7 @@ class RoundFunction: SingleParameterDoubleFunction {
         return round(value)
     }
     
-    static func formulaEditorSection() -> FormulaEditorSection {
-        return .math(position: position)
+    func formulaEditorSection() -> FormulaEditorSection {
+        return .math(position: type(of: self).position)
     }
 }

@@ -23,15 +23,15 @@
 protocol ObjectStringSensor: ObjectSensor {
 
     // The iOS device specific value of the sensor
-    static func rawValue(for spriteObject: SpriteObject) -> String
+    func rawValue(for spriteObject: SpriteObject) -> String
     
     // Convert the iOS specific value (rawValue) to the Pocket Code standardized sensor value
-    static func convertToStandardized(rawValue: String, for spriteObject: SpriteObject) -> String
+    func convertToStandardized(rawValue: String, for spriteObject: SpriteObject) -> String
 }
 
 extension ObjectStringSensor {
     // The Pocket Code standardized sensor value
-    static func standardizedValue(for spriteObject: SpriteObject) -> String {
+    func standardizedValue(for spriteObject: SpriteObject) -> String {
         let rawValue = self.rawValue(for: spriteObject)
         return convertToStandardized(rawValue: rawValue, for: spriteObject)
     }

@@ -28,11 +28,11 @@ class MaxFunction: DoubleParameterDoubleFunction {
     static var isIdempotent = true
     static let position = 190
     
-    static func firstParameter() -> FunctionParameter {
+    func firstParameter() -> FunctionParameter {
         return .number(defaultValue: 0)
     }
     
-    static func secondParameter() -> FunctionParameter {
+    func secondParameter() -> FunctionParameter {
         return .number(defaultValue: 1)
     }
     
@@ -44,7 +44,7 @@ class MaxFunction: DoubleParameterDoubleFunction {
         return max(firstValue, secondValue)
     }
     
-    static func formulaEditorSection() -> FormulaEditorSection {
-        return .math(position: position)
+    func formulaEditorSection() -> FormulaEditorSection {
+        return .math(position: type(of: self).position)
     }
 }

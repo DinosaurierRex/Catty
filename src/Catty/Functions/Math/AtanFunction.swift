@@ -29,7 +29,7 @@ class AtanFunction: SingleParameterDoubleFunction {
     static var isIdempotent = true
     static let position = 140
     
-    static func firstParameter() -> FunctionParameter {
+    func firstParameter() -> FunctionParameter {
         return .number(defaultValue: 0)
     }
     
@@ -38,7 +38,7 @@ class AtanFunction: SingleParameterDoubleFunction {
         return Util.radians(toDegree: atan(degree))
     }
     
-    static func formulaEditorSection() -> FormulaEditorSection {
-        return .math(position: position)
+    func formulaEditorSection() -> FormulaEditorSection {
+        return .math(position: type(of: self).position)
     }
 }

@@ -161,9 +161,9 @@ import CoreLocation
         
         if let sensor = sensor as? ObjectSensor, let spriteObject = spriteObject {
             if let sensor = sensor as? ObjectDoubleSensor {
-                rawValue = type(of: sensor).standardizedValue(for: spriteObject) as AnyObject
+                rawValue = sensor.standardizedValue(for: spriteObject) as AnyObject
             } else if let sensor = sensor as? ObjectStringSensor {
-                rawValue = type(of: sensor).standardizedValue(for: spriteObject) as AnyObject
+                rawValue = sensor.standardizedValue(for: spriteObject) as AnyObject
             }
         } else if let sensor = sensor as? TouchSensor, let spriteObject = spriteObject {
             rawValue = sensor.standardizedValue(for: spriteObject) as AnyObject

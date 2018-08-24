@@ -28,7 +28,7 @@
     static let position = 10
     static let requiredResource = ResourceType.noResources
     
-    static func rawValue(for spriteObject: SpriteObject) -> Double {
+    func rawValue(for spriteObject: SpriteObject) -> Double {
         guard let spriteNode = spriteObject.spriteNode else {
             return TransparencySensor.defaultRawValue
         }
@@ -36,7 +36,7 @@
         return Double(spriteNode.alpha)
     }
     
-    static func setRawValue(userInput: Double, for spriteObject: SpriteObject) {
+    func setRawValue(userInput: Double, for spriteObject: SpriteObject) {
         let rawValue = self.convertToRaw(userInput: userInput, for: spriteObject)
         spriteObject.spriteNode.alpha = CGFloat(rawValue)
     }
@@ -53,7 +53,7 @@
      */
     
     // f:[0, 1] -> [0, 100]
-    static func convertToStandardized(rawValue: Double, for spriteObject: SpriteObject) -> Double {
+    func convertToStandardized(rawValue: Double, for spriteObject: SpriteObject) -> Double {
         
         if rawValue >= 1 {
             return 0.0 // maximum transparency
@@ -65,7 +65,7 @@
     }
     
     // f:[0, 100] -> [0, 1]
-    static func convertToRaw(userInput: Double, for spriteObject: SpriteObject) -> Double {
+    func convertToRaw(userInput: Double, for spriteObject: SpriteObject) -> Double {
         
         if userInput >= 100 {
             return 0.0 // maximum transparency
@@ -76,7 +76,7 @@
         return (100 - userInput) / 100
     }
     
-    static func formulaEditorSection(for spriteObject: SpriteObject) -> FormulaEditorSection {
-        return .object(position: position)
+    func formulaEditorSection(for spriteObject: SpriteObject) -> FormulaEditorSection {
+        return .object(position: type(of: self).position)
     }
 }

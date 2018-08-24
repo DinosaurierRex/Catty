@@ -35,7 +35,7 @@ class ArduinoAnalogPinFunction: SingleParameterDoubleFunction {
         self.getBluetoothService = bluetoothServiceGetter
     }
     
-    static func firstParameter() -> FunctionParameter {
+    func firstParameter() -> FunctionParameter {
         return .number(defaultValue: 0)
     }
     
@@ -45,10 +45,10 @@ class ArduinoAnalogPinFunction: SingleParameterDoubleFunction {
         return self.getBluetoothService()?.getSensorArduino()?.getAnalogPin(pin) ?? type(of: self).defaultValue
     }
     
-    static func formulaEditorSection() -> FormulaEditorSection {
+    func formulaEditorSection() -> FormulaEditorSection {
         if UserDefaults.standard.bool(forKey: kUseArduinoBricks) == false {
             return .hidden
         }
-        return .device(position: position)
+        return .device(position: type(of: self).position)
     }
 }

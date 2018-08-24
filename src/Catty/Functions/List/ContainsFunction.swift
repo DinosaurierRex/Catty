@@ -28,11 +28,11 @@ class ContainsFunction: DoubleParameterDoubleFunction {
     static var isIdempotent = false
     static let position = 260
     
-    static func firstParameter() -> FunctionParameter {
+    func firstParameter() -> FunctionParameter {
         return .list(defaultValue: "list name")
     }
     
-    static func secondParameter() -> FunctionParameter {
+    func secondParameter() -> FunctionParameter {
         return .number(defaultValue: 1)
     }
     
@@ -55,7 +55,7 @@ class ContainsFunction: DoubleParameterDoubleFunction {
         return first == second
     }
     
-    static func formulaEditorSection() -> FormulaEditorSection {
-        return .math(position: position)
+    func formulaEditorSection() -> FormulaEditorSection {
+        return .math(position: type(of: self).position)
     }
 }

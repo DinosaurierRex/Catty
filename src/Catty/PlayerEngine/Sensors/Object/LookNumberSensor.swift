@@ -28,29 +28,29 @@
     static let position = 40
     static let requiredResource = ResourceType.noResources
 
-    static func rawValue(for spriteObject: SpriteObject) -> Double {
+    func rawValue(for spriteObject: SpriteObject) -> Double {
         guard let spriteNode = spriteObject.spriteNode else { return LookNumberSensor.defaultRawValue }
         guard let currentLook = spriteNode.currentLook else { return LookNumberSensor.defaultRawValue }
         let index = spriteObject.lookList.index(of: currentLook)
         return Double(index)
     }
     
-    static func convertToStandardized(rawValue: Double, for spriteObject: SpriteObject) -> Double {
+    func convertToStandardized(rawValue: Double, for spriteObject: SpriteObject) -> Double {
         return rawValue + 1
     }
     
-    static func setRawValue(userInput: Double, for spriteObject: SpriteObject) {
+    func setRawValue(userInput: Double, for spriteObject: SpriteObject) {
         fatalError("This sensor is read-only")
     }
     
-    static func convertToRaw(userInput: Double, for spriteObject: SpriteObject) -> Double {
+    func convertToRaw(userInput: Double, for spriteObject: SpriteObject) -> Double {
         fatalError("This sensor is read-only")
     }
     
-    static func formulaEditorSection(for spriteObject: SpriteObject) -> FormulaEditorSection {
+    func formulaEditorSection(for spriteObject: SpriteObject) -> FormulaEditorSection {
         if spriteObject.isBackground() == true {
             return .hidden
         }
-        return .object(position: position)
+        return .object(position: type(of: self).position)
     }
 }

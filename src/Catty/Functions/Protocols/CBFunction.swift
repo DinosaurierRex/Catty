@@ -48,10 +48,10 @@ extension CBFunction {
         var parameters = [FunctionParameter]()
         
         if let function = self as? SingleParameterFunctionProtocol {
-            parameters.append(type(of: function).firstParameter())
+            parameters.append(function.firstParameter())
         } else if let function = self as? DoubleParameterFunctionProtocol {
-            parameters.append(type(of: function).firstParameter())
-            parameters.append(type(of: function).secondParameter())
+            parameters.append(function.firstParameter())
+            parameters.append(function.secondParameter())
         }
         
         return parameters
@@ -87,7 +87,7 @@ extension CBFunction {
      add both string and numbers as parameters, interpreting them as strings;
         if the number does not have a floating part, then it is
      interpreted as a whole number  */
-    static func interpretParameter(parameter: AnyObject?) -> String {
+     static func interpretParameter(parameter: AnyObject?) -> String {
         if let text = parameter as? String {
             return text
         }
@@ -118,12 +118,12 @@ protocol AnyFunction: CBFunction {
 }
 
 protocol SingleParameterFunctionProtocol: CBFunction {
-    static func firstParameter() -> FunctionParameter
+     func firstParameter() -> FunctionParameter
 }
 
 protocol DoubleParameterFunctionProtocol: CBFunction {
-    static func firstParameter() -> FunctionParameter
-    static func secondParameter() -> FunctionParameter
+     func firstParameter() -> FunctionParameter
+     func secondParameter() -> FunctionParameter
 }
 
 protocol ZeroParameterDoubleFunction: DoubleFunction {

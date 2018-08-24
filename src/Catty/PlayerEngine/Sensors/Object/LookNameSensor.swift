@@ -29,20 +29,20 @@
     static let position = 50
     static let requiredResource = ResourceType.noResources
 
-    static func rawValue(for spriteObject: SpriteObject) -> String {
+    func rawValue(for spriteObject: SpriteObject) -> String {
         guard let spriteNode = spriteObject.spriteNode else { return LookNameSensor.defaultStringValue }
         guard let currentLook = spriteNode.currentLook else { return LookNameSensor.defaultStringValue }
         return currentLook.name
     }
 
-    static func convertToStandardized(rawValue: String, for spriteObject: SpriteObject) -> String {
+    func convertToStandardized(rawValue: String, for spriteObject: SpriteObject) -> String {
         return rawValue
     }
    
-    static func formulaEditorSection(for spriteObject: SpriteObject) -> FormulaEditorSection {
+    func formulaEditorSection(for spriteObject: SpriteObject) -> FormulaEditorSection {
         if spriteObject.isBackground() == true {
             return .hidden
         }
-        return .object(position: position)
+        return .object(position: type(of: self).position)
     }
 }

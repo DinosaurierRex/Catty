@@ -29,7 +29,7 @@ class LengthFunction: SingleParameterDoubleFunction {
     static var isIdempotent = true
     static let position = 210
     
-    static func firstParameter() -> FunctionParameter {
+    func firstParameter() -> FunctionParameter {
         return .string(defaultValue: "hello world")
     }
     
@@ -38,7 +38,7 @@ class LengthFunction: SingleParameterDoubleFunction {
         return Double(text.count)
     }
     
-    static func formulaEditorSection() -> FormulaEditorSection {
-        return .math(position: position)
+    func formulaEditorSection() -> FormulaEditorSection {
+        return .math(position: type(of: self).position)
     }
 }

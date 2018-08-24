@@ -28,29 +28,29 @@ class PositionYSensor: ObjectDoubleSensor {
     static let position = 70
     static let requiredResource = ResourceType.noResources
     
-    static func rawValue(for spriteObject: SpriteObject) -> Double {
+    func rawValue(for spriteObject: SpriteObject) -> Double {
         guard let spriteNode = spriteObject.spriteNode else { return PositionYSensor.defaultRawValue }
         
         return Double(spriteNode.position.y)
     }
     
-    static func setRawValue(userInput: Double, for spriteObject: SpriteObject) {
+    func setRawValue(userInput: Double, for spriteObject: SpriteObject) {
         let rawValue = convertToRaw(userInput: userInput, for: spriteObject)
         spriteObject.spriteNode.position.y = CGFloat(rawValue)
     }
     
-    static func convertToRaw(userInput: Double, for spriteObject: SpriteObject) -> Double {
-        guard let scene = spriteObject.spriteNode.scene else { return defaultRawValue }
+    func convertToRaw(userInput: Double, for spriteObject: SpriteObject) -> Double {
+        guard let scene = spriteObject.spriteNode.scene else { return type(of: self).defaultRawValue }
         return Double(scene.size.height)/2.0 + userInput
     }
     
     // We have to move (0, 0) from bottom left to the center
-    static func convertToStandardized(rawValue: Double, for spriteObject: SpriteObject) -> Double {
-        guard let scene = spriteObject.spriteNode.scene else { return defaultRawValue }
+    func convertToStandardized(rawValue: Double, for spriteObject: SpriteObject) -> Double {
+        guard let scene = spriteObject.spriteNode.scene else { return type(of: self).defaultRawValue }
         return rawValue - Double(scene.size.height)/2.0
     }
     
-    static func formulaEditorSection(for spriteObject: SpriteObject) -> FormulaEditorSection {
-        return .object(position: position)
+    func formulaEditorSection(for spriteObject: SpriteObject) -> FormulaEditorSection {
+        return .object(position: type(of: self).position)
     }
 }

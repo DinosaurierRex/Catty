@@ -28,11 +28,11 @@ class ModFunction: DoubleParameterDoubleFunction {
     static var isIdempotent = true
     static let position = 110
     
-    static func firstParameter() -> FunctionParameter {
+    func firstParameter() -> FunctionParameter {
         return .number(defaultValue: 1)
     }
     
-    static func secondParameter() -> FunctionParameter {
+    func secondParameter() -> FunctionParameter {
         return .number(defaultValue: 1)
     }
     
@@ -63,7 +63,7 @@ class ModFunction: DoubleParameterDoubleFunction {
         
     }
     
-    static func formulaEditorSection() -> FormulaEditorSection {
-        return .math(position: position)
+    func formulaEditorSection() -> FormulaEditorSection {
+        return .math(position: type(of: self).position)
     }
 }

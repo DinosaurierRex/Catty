@@ -26,34 +26,35 @@
     static let name = kUIFEObjectDirection
     static let defaultRawValue = 0.0
     static let requiredResource = ResourceType.noResources
-    static let rotationDegreeOffset = 90.0
-    static let circleMaxDegrees = 360.0
     static let position = 90
+    
+    let rotationDegreeOffset = 90.0
+    let circleMaxDegrees = 360.0
 
-    static func rawValue(for spriteObject: SpriteObject) -> Double {
+    func rawValue(for spriteObject: SpriteObject) -> Double {
         guard let spriteNode = spriteObject.spriteNode else {
-            return self.defaultRawValue
+            return type(of: self).defaultRawValue
         }
         return Double(spriteNode.zRotation)
     }
     
-    static func setRawValue(userInput: Double, for spriteObject: SpriteObject) {
+    func setRawValue(userInput: Double, for spriteObject: SpriteObject) {
         let rawValue = self.convertToRaw(userInput: userInput, for: spriteObject)
         spriteObject.spriteNode.zRotation = CGFloat(rawValue)
     }
     
     // raw value is in radians, standardized value is in degrees
-    @objc static func convertToStandardized(rawValue: Double, for spriteObject: SpriteObject) -> Double {
+    @objc func convertToStandardized(rawValue: Double, for spriteObject: SpriteObject) -> Double {
         let rawValueDegrees = Util.radians(toDegree: rawValue)
         return self.convertSceneToDegrees(rawValueDegrees)
     }
     
-    @objc static func convertToRaw(userInput: Double, for spriteObject: SpriteObject) -> Double {
+    @objc func convertToRaw(userInput: Double, for spriteObject: SpriteObject) -> Double {
         let standardizedValueOnScreen = convertMathDegreesToSceneDegrees(userInput)
         return Util.degree(toRadians: standardizedValueOnScreen)
     }
     
-    static func convertMathDegreesToSceneDegrees(_ mathDegrees: Double) -> Double {
+    func convertMathDegreesToSceneDegrees(_ mathDegrees: Double) -> Double {
         // converts a given value to make it belong to the interval [0, 360) - moves to the first trigonometric circle due to periodicity
         let circleDegrees = circleMaxDegrees
         if mathDegrees < 0.0 {
@@ -63,7 +64,7 @@
         return (circleDegrees - (mathDegrees.truncatingRemainder(dividingBy: circleDegrees) - rotationDegreeOffset)).truncatingRemainder(dividingBy: circleDegrees)
     }
     
-    static func convertSceneToDegrees(_ mathDegrees: Double) -> Double {
+    func convertSceneToDegrees(_ mathDegrees: Double) -> Double {
         //  ensures that the value is reduced to the first trigonometric circle, meaning [0, 360)
         let sceneDegrees = self.convertMathDegreesToSceneDegrees(mathDegrees)
         
@@ -77,7 +78,7 @@
         return sceneDegrees // it was already in that interval
     }
     
-    static func formulaEditorSection(for spriteObject: SpriteObject) -> FormulaEditorSection {
-        return .object(position: position)
+    func formulaEditorSection(for spriteObject: SpriteObject) -> FormulaEditorSection {
+        return .object(position: type(of: self).position)
     }
 }

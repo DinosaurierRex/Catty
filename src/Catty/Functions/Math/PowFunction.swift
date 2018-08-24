@@ -28,11 +28,11 @@ class PowFunction: DoubleParameterDoubleFunction {
     static var isIdempotent = true
     static let position = 160
     
-    static func firstParameter() -> FunctionParameter {
+    func firstParameter() -> FunctionParameter {
         return .number(defaultValue: 2)
     }
     
-    static func secondParameter() -> FunctionParameter {
+    func secondParameter() -> FunctionParameter {
         return .number(defaultValue: 3)
     }
     
@@ -44,7 +44,7 @@ class PowFunction: DoubleParameterDoubleFunction {
         return pow(base, exponent)
     }
     
-    static func formulaEditorSection() -> FormulaEditorSection {
-        return .math(position: position)
+    func formulaEditorSection() -> FormulaEditorSection {
+        return .math(position: type(of: self).position)
     }
 }

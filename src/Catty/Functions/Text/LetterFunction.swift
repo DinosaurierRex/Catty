@@ -28,11 +28,11 @@ class LetterFunction: DoubleParameterStringFunction {
     static var isIdempotent = true
     static let position = 220
     
-    static func firstParameter() -> FunctionParameter {
+    func firstParameter() -> FunctionParameter {
         return .number(defaultValue: 1)
     }
     
-    static func secondParameter() -> FunctionParameter {
+    func secondParameter() -> FunctionParameter {
         return .string(defaultValue: "hello world")
     }
     
@@ -49,7 +49,7 @@ class LetterFunction: DoubleParameterStringFunction {
         return String(text[index])
     }
     
-    static func formulaEditorSection() -> FormulaEditorSection {
-        return .math(position: position)
+    func formulaEditorSection() -> FormulaEditorSection {
+        return .math(position: type(of: self).position)
     }
 }

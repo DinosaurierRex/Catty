@@ -28,11 +28,11 @@ class RandFunction: DoubleParameterDoubleFunction {
     static var isIdempotent = false
     static let position = 80
     
-    static func firstParameter() -> FunctionParameter {
+    func firstParameter() -> FunctionParameter {
         return .number(defaultValue: 0)
     }
     
-    static func secondParameter() -> FunctionParameter {
+    func secondParameter() -> FunctionParameter {
         return .number(defaultValue: 1)
     }
     
@@ -92,7 +92,7 @@ class RandFunction: DoubleParameterDoubleFunction {
         return newResult
     }
     
-    static func formulaEditorSection() -> FormulaEditorSection {
-        return .math(position: position)
+    func formulaEditorSection() -> FormulaEditorSection {
+        return .math(position: type(of: self).position)
     }
 }

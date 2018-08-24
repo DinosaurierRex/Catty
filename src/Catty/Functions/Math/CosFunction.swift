@@ -29,7 +29,7 @@ class CosFunction: SingleParameterDoubleFunction {
     static var isIdempotent = true
     static let position = 20
     
-    static func firstParameter() -> FunctionParameter {
+    func firstParameter() -> FunctionParameter {
         return .number(defaultValue: 0)
     }
     
@@ -38,7 +38,7 @@ class CosFunction: SingleParameterDoubleFunction {
         return cos(Util.degree(toRadians: degree))
     }
     
-    static func formulaEditorSection() -> FormulaEditorSection {
-        return .math(position: position)
+    func formulaEditorSection() -> FormulaEditorSection {
+        return .math(position: type(of: self).position)
     }
 }

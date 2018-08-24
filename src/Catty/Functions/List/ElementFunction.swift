@@ -28,11 +28,11 @@ class ElementFunction: DoubleParameterFunction {
     static var isIdempotent = false
     static let position = 250
     
-    static func firstParameter() -> FunctionParameter {
+    func firstParameter() -> FunctionParameter {
         return .number(defaultValue: 1)
     }
     
-    static func secondParameter() -> FunctionParameter {
+    func secondParameter() -> FunctionParameter {
         return .list(defaultValue: "list name")
     }
     
@@ -51,7 +51,7 @@ class ElementFunction: DoubleParameterFunction {
         return elements[index]
     }
     
-    static func formulaEditorSection() -> FormulaEditorSection {
-        return .math(position: position)
+    func formulaEditorSection() -> FormulaEditorSection {
+        return .math(position: type(of: self).position)
     }
 }

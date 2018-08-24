@@ -28,19 +28,19 @@
     static let position = 100
     static let requiredResource = ResourceType.noResources
 
-    static func rawValue(for spriteObject: SpriteObject) -> Double {
+    func rawValue(for spriteObject: SpriteObject) -> Double {
         guard let spriteNode = spriteObject.spriteNode else {
             return defaultRawValue
         }
         return Double(spriteNode.zPosition)
     }
     
-    static func setRawValue(userInput: Double, for spriteObject: SpriteObject) {
+    func setRawValue(userInput: Double, for spriteObject: SpriteObject) {
         let rawValue = convertToRaw(userInput: userInput, for: spriteObject)
         spriteObject.spriteNode.zPosition = CGFloat(rawValue)
     }
 
-    static func convertToStandardized(rawValue: Double, for spriteObject: SpriteObject) -> Double {
+    func convertToStandardized(rawValue: Double, for spriteObject: SpriteObject) -> Double {
         if rawValue == 0 {
             // for background
             return -1
@@ -48,7 +48,7 @@
         return rawValue
     }
     
-    static func convertToRaw(userInput: Double, for spriteObject: SpriteObject) -> Double {
+    func convertToRaw(userInput: Double, for spriteObject: SpriteObject) -> Double {
         if userInput < 1 {
             // can not be set for background
             return 1
@@ -56,7 +56,7 @@
         return userInput
     }
     
-    static func formulaEditorSection(for spriteObject: SpriteObject) -> FormulaEditorSection {
-        return .object(position: position)
+    func formulaEditorSection(for spriteObject: SpriteObject) -> FormulaEditorSection {
+        return .object(position: type(of: self).position)
     }
 }
