@@ -56,13 +56,13 @@ final class FacePositionYSensorTest: XCTestCase {
     func testConvertToStandardized() {
         
         // middle
-         XCTAssertEqual(330 - Double(Util.screenHeight()) / 1.05, sensor.convertToStandardized(rawValue: 330))
-         
-         // half up
-         XCTAssertEqual(480 - Double(Util.screenHeight()) / 1.05, sensor.convertToStandardized(rawValue: 480))
-         
-         // half down
-         XCTAssertEqual(180 - Double(Util.screenHeight()) / 1.05, sensor.convertToStandardized(rawValue: 180))
+        XCTAssertEqual(330 - Double(Util.screenHeight()) / 1.05, sensor.convertToStandardized(rawValue: 330))
+        
+        // half up
+        XCTAssertEqual(480 - Double(Util.screenHeight()) / 1.05, sensor.convertToStandardized(rawValue: 480))
+        
+        // half down
+        XCTAssertEqual(180 - Double(Util.screenHeight()) / 1.05, sensor.convertToStandardized(rawValue: 180))
     }
     
     func testTag() {
@@ -74,10 +74,6 @@ final class FacePositionYSensorTest: XCTestCase {
     }
     
     func testFormulaEditorSection() {
-        UserDefaults.standard.set(true, forKey: kUseFaceDetectionSensors)
-        XCTAssertEqual(.device(position: type(of: sensor).position), type(of: sensor).formulaEditorSection(for: SpriteObject()))
-        
-        UserDefaults.standard.set(false, forKey: kUseFaceDetectionSensors)
-        XCTAssertEqual(.hidden, type(of: sensor).formulaEditorSection(for: SpriteObject()))
+        XCTAssertEqual(.device(position: type(of: sensor).position), sensor.formulaEditorSection(for: SpriteObject()))
     }
 }

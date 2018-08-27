@@ -54,7 +54,7 @@ final class FaceSizeSensorTest: XCTestCase {
     
     
     func testConvertToStandardized() {
-        let screenSize = Util.screenHeight() * Util.screenWidth() / 50
+        let screenSize = Util.screenHeight() * Util.screenWidth() / 100
         
         // arm-length from the face
         XCTAssertEqual(28, sensor.convertToStandardized(rawValue: Double(28 * screenSize)))
@@ -64,6 +64,9 @@ final class FaceSizeSensorTest: XCTestCase {
         
         // awkward selfie level -  too close
         XCTAssertEqual(80, sensor.convertToStandardized(rawValue: Double(80 * screenSize)))
+        
+        // too big
+        XCTAssertEqual(100, sensor.convertToStandardized(rawValue: Double(120 * screenSize)))
     }
     
     func testTag() {
@@ -75,10 +78,6 @@ final class FaceSizeSensorTest: XCTestCase {
     }
     
     func testFormulaEditorSection() {
-        UserDefaults.standard.set(true, forKey: kUseFaceDetectionSensors)
-        XCTAssertEqual(.device(position: type(of: sensor).position), type(of: sensor).formulaEditorSection(for: SpriteObject()))
-        
-        UserDefaults.standard.set(false, forKey: kUseFaceDetectionSensors)
-        XCTAssertEqual(.hidden, type(of: sensor).formulaEditorSection(for: SpriteObject()))
+        XCTAssertEqual(.device(position: type(of: sensor).position), sensor.formulaEditorSection(for: SpriteObject()))
     }
 }
